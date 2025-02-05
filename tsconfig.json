@@ -1,0 +1,19 @@
+{
+	"include": ["src/**/*.ts"],
+	"compilerOptions": {
+		"target": "es6",
+		"moduleResolution": "NodeNext",
+		"module": "NodeNext",
+		"noEmit": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"strict": true,
+		"skipLibCheck": true,
+		"resolveJsonModule": true,
+		"checkJs": true,
+		"allowJs": true
+	},
+	"ts-node": {
+		"esm": true
+	}
+}
