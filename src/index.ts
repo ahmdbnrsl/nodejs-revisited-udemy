@@ -1,4 +1,4 @@
-import * as http from 'http';
+//import * as http from 'http';
 import Express from 'express';
 import * as FS from 'fs';
 import * as Path from 'path';
@@ -57,28 +57,33 @@ app.get(
 		res: Express.Response<any, Record<string, any>>
 	) => {
 		const { id } = req.params as Record<string, any>;
-		FS.writeFile(
-			path('public', 'data.txt'),
-			id,
-			(err: NodeJS.ErrnoException | null) => {
-				if (err) {
-					console.error('Error menulis file:', err);
-					return res.status(500).send('Gagal menulis file');
-				}
-				FS.readFile(
-					path('public', 'data.txt'),
-					'utf-8',
-					(err: NodeJS.ErrnoException | null, data: string) => {
-						if (err) {
-							console.error('Error membaca file:', err);
-							return res.status(500).send('Gagal membaca file');
-						}
-						console.log(data);
-						res.send(data);
+		if (!Number(id) || Number(id) <= 0) {
+			res.status(400).send('invalid id');
+		} else
+			FS.writeFile(
+				path('public', 'data.txt'),
+				id,
+				(err: NodeJS.ErrnoException | null) => {
+					if (err) {
+						console.error('Error menulis file:', err);
+						return res.status(500).send('Gagal menulis file');
 					}
-				);
-			}
-		);
+					FS.readFile(
+						path('public', 'data.txt'),
+						'utf-8',
+						(err: NodeJS.ErrnoException | null, data: string) => {
+							if (err) {
+								console.error('Error membaca file:', err);
+								return res
+									.status(500)
+									.send('Gagal membaca file');
+							}
+							console.log(data);
+							res.send(data);
+						}
+					);
+				}
+			);
 	}
 );
 
